@@ -254,7 +254,7 @@ export const ScoutRow: React.FC<Props> = ({
 
   return (
     <article
-      className="scout-card"
+      className={`scout-card scout-card--${status}`}
       style={{
         position: "relative",
         zIndex: showMbPopover ? 50 : 1,

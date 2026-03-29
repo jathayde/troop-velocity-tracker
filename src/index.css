@@ -115,19 +115,51 @@ main {
   transition: transform 0.2s, border-color 0.2s;
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
   width: 100%;
   box-sizing: border-box;
+  transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1),
+              box-shadow 0.2s ease,
+              border-color 0.2s ease,
+              background 0.3s ease;
 }
 
-.scout-card-red {
-  background: var(--card-tint-red);
-  border-left: 3px solid var(--red);
+.scout-card--red {
+  background: linear-gradient(
+    to right,
+    var(--card-tint-red) 0%,
+    var(--card-bg) 45%,
+    var(--card-bg) 100%
+  );
+  border-left: 4px solid var(--red);
+  box-shadow: 0 8px 30px -10px rgba(206, 17, 38, 0.15);
 }
 
-.scout-card-yellow {
-  background: var(--card-tint-yellow);
-  border-left: 3px solid var(--yellow);
+.scout-card--yellow {
+  background: linear-gradient(
+    to right,
+    var(--card-tint-yellow) 0%,
+    var(--card-bg) 45%,
+    var(--card-bg) 100%
+  );
+  border-left: 4px solid var(--yellow);
+}
+
+.scout-card--red:hover {
+  background: linear-gradient(
+    to right,
+    color-mix(in srgb, var(--card-tint-red) 120%, transparent) 0%,
+    var(--card-bg) 55%,
+    var(--card-bg) 100%
+  );
+}
+
+.scout-card--yellow:hover {
+  background: linear-gradient(
+    to right,
+    color-mix(in srgb, var(--card-tint-yellow) 120%, transparent) 0%,
+    var(--card-bg) 55%,
+    var(--card-bg) 100%
+  );
 }
 
 /* Scout card title row: left cluster | centered status | right-justified badges */

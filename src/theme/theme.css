@@ -36,8 +36,8 @@
   --success-bright: #2dd48f;
   --shadow-popover: 0 10px 25px -5px rgba(0, 0, 0, 0.45);
   /* Cards tinted by status */
-  --card-tint-red: rgba(206, 17, 38, 0.1);
-  --card-tint-yellow: rgba(252, 209, 22, 0.1);
+  --card-tint-red: rgba(206, 17, 38, 0.15);
+  --card-tint-yellow: rgba(252, 209, 22, 0.15);
   /* Timeline */
   --timeline-track-bg: rgba(255, 255, 255, 0.07);
   --timeline-accent-start: #003f87;
@@ -102,8 +102,8 @@
   --popover-text: #515354;
   --success-bright: #006b3f;
   --shadow-popover: 0 10px 25px -5px rgba(36, 62, 44, 0.12);
-  --card-tint-red: rgba(206, 17, 38, 0.08);
-  --card-tint-yellow: rgba(252, 209, 22, 0.12);
+  --card-tint-red: rgba(206, 17, 38, 0.12);
+  --card-tint-yellow: rgba(252, 209, 22, 0.18);
   --timeline-track-bg: rgba(36, 62, 44, 0.08);
   --timeline-accent-start: #003f87;
   --timeline-accent-end: #006b3f;
