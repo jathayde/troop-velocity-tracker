@@ -138,7 +138,7 @@ main {
   box-sizing: border-box;
   margin-bottom: 0.75rem;
   min-width: 0;
-  overflow-x: auto;
+  overflow: visible;
   scrollbar-width: thin;
 }
 

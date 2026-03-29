@@ -335,64 +335,107 @@ export const ScoutRow: React.FC<Props> = ({
                 className="scout-merit-popover"
                 style={{
                   position: "absolute",
-                  top: "100%",
-                  left: "50%",
-                  transform: "translateX(-50%)",
-                  marginTop: "0.5rem",
-                  zIndex: 50,
-                  padding: "0.75rem",
+                  top: "calc(100% + 10px)",
+                  right: 0,
+                  zIndex: 100,
+                  padding: "1rem",
                   background: "var(--popover-bg)",
                   border: "1px solid var(--popover-border)",
-                  borderRadius: "0.5rem",
+                  borderRadius: "0.75rem",
                   boxShadow: "var(--shadow-popover)",
-                  minWidth: "220px",
+                  minWidth: "240px",
                   cursor: "default",
                   textAlign: "left",
+                  animation: "popoverIn 0.2s ease-out",
                 }}
                 onClick={(e) => e.stopPropagation()}
               >
+                {/* Arrow */}
+                <div
+                  style={{
+                    position: "absolute",
+                    top: -6,
+                    right: 8,
+                    width: 12,
+                    height: 12,
+                    background: "var(--popover-bg)",
+                    borderLeft: "1px solid var(--popover-border)",
+                    borderTop: "1px solid var(--popover-border)",
+                    transform: "rotate(45deg)",
+                  }}
+                />
+
                 <div
                   className="scout-merit-popover__title"
                   style={{
-                    fontSize: "0.7rem",
-                    fontWeight: 600,
+                    fontSize: "0.75rem",
+                    fontWeight: 700,
                     color: "var(--popover-title)",
-                    marginBottom: "0.5rem",
-                    borderBottom: "1px solid var(--popover-border)",
-                    paddingBottom: "0.25rem",
+                    marginBottom: "0.75rem",
+                    display: "flex",
+                    justifyContent: "space-between",
+                    alignItems: "center",
                   }}
                 >
-                  Missing Eagle Requirements:
+                  <span>Missing Eagle Required:</span>
+                  <span style={{ color: "var(--accent-muted)", fontWeight: 400 }}>
+                    {missingEagleReqs.length} left
+                  </span>
                 </div>
+
                 <ul
                   className="scout-merit-popover__list"
                   style={{
                     margin: 0,
-                    paddingLeft: "1.2rem",
+                    padding: 0,
+                    listStyle: "none",
                     color: "var(--popover-text)",
-                    fontSize: "0.7rem",
-                    display: "flex",
-                    flexDirection: "column",
-                    gap: "0.2rem",
+                    fontSize: "0.75rem",
+                    display: "grid",
+                    gridTemplateColumns: missingEagleReqs.length > 8 ? "1fr 1fr" : "1fr",
+                    gap: "0.35rem 1rem",
                     whiteSpace: "normal",
                   }}
                 >
                   {missingEagleReqs.map((req) => (
-                    <li key={req}>{req}</li>
-                  ))}
-                  {missingElectives > 0 && (
                     <li
-                      key="elective"
+                      key={req}
                       style={{
-                        marginTop: "0.25rem",
-                        color: "var(--text-dim)",
+                        display: "flex",
+                        alignItems: "center",
+                        gap: "0.5rem",
                       }}
                     >
-                      {missingElectives} Elective badge
-                      {missingElectives !== 1 ? "s" : ""}
+                      <span
+                        style={{
+                          width: 4,
+                          height: 4,
+                          borderRadius: "50%",
+                          background: "var(--accent-muted)",
+                          opacity: 0.6,
+                        }}
+                      />
+                      {req}
                     </li>
-                  )}
+                  ))}
                 </ul>
+
+                {(missingElectives > 0 || totalMissing === 0) && (
+                  <div
+                    style={{
+                      marginTop: "1rem",
+                      paddingTop: "0.75rem",
+                      borderTop: "1px solid var(--popover-border)",
+                      fontSize: "0.7rem",
+                      color: "var(--text-dim)",
+                      display: "flex",
+                      justifyContent: "space-between",
+                    }}
+                  >
+                    <span>Electives missing:</span>
+                    <span style={{ fontWeight: 600 }}>{missingElectives}</span>
+                  </div>
+                )}
               </div>
             )}
           </div>
