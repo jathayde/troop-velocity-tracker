@@ -277,7 +277,7 @@ export const ScoutRow: React.FC<Props> = ({
               <button
                 type="button"
                 onClick={draftEmail}
-                title="Draft Progress Report Email"
+                aria-label={`Draft Progress Report Email for ${scoutData.nickname || firstName} ${lastName}`}
                 className="scout-email-btn"
               >
                 <Mail size={16} />
@@ -299,7 +299,17 @@ export const ScoutRow: React.FC<Props> = ({
 
           <div
             className="scout-merit-badge-subline"
+            role="button"
+            tabIndex={0}
             onClick={() => setShowMbPopover(!showMbPopover)}
+            onKeyDown={(e) => {
+              if (e.key === "Enter" || e.key === " ") {
+                e.preventDefault();
+                setShowMbPopover(!showMbPopover);
+              }
+            }}
+            aria-expanded={showMbPopover}
+            aria-label={`View merit badge details for ${scoutData.nickname || firstName}`}
           >
             <span className="scout-merit-badge-subline__icon">🎖</span>
             <span className="scout-merit-badge-subline__text">
@@ -600,6 +610,12 @@ export const ScoutRow: React.FC<Props> = ({
               <div
                 key={m.rank}
                 className="scout-timeline__milestone"
+                aria-label={`${m.rank}${m.earned
+                  ? ` (Earned ${formatDateLabel(m.earned, false)})`
+                  : m.projected
+                    ? ` (Projected ${formatDateLabel(m.projected, true)})`
+                    : ""
+                  }`}
                 title={`${m.rank}${m.earned
                   ? ` – earned ${formatDateLabel(m.earned, false)}`
                   : m.projected

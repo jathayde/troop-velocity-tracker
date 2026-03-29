@@ -9,7 +9,7 @@ import { auth } from "./api/auth";
 import { scoutingClient } from "./api/scoutingClient";
 import { cacheManager } from "./api/cache";
 import { parseISO, differenceInMonths } from "date-fns";
-import { Rocket, Users, Settings, LogOut, ArrowUpDown } from "lucide-react";
+import { Rocket, Users, Cog, Power, ArrowUpDown } from "lucide-react";
 import { ThemeToggle } from "./theme/ThemeToggle";
 
 function App() {
@@ -398,7 +398,6 @@ function App() {
             <Rocket size={24} />
             <h1>Troop Velocity Tracker</h1>
           </div>
-          <ThemeToggle />
         </div>
       </header>
 
@@ -421,16 +420,22 @@ function App() {
           </div>
         ) : (
           <div className="dashboard">
-            <div
+            <nav
               className="dashboard-toolbar filter-header"
-              style={{
-                display: "flex",
-                justifyContent: "space-between",
-                alignItems: "center",
-                flexWrap: "wrap",
-                gap: "1rem",
-              }}
+              aria-label="Dashboard filters and actions"
             >
+              <div
+                className="dashboard-toolbar__inner"
+                style={{
+                  maxWidth: "1200px",
+                  margin: "0 auto",
+                  display: "flex",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                  flexWrap: "wrap",
+                  gap: "1rem",
+                }}
+              >
               <div
                 className="dashboard-toolbar__lead"
                 style={{ display: "flex", alignItems: "center", gap: "1rem" }}
@@ -470,7 +475,11 @@ function App() {
                   flexWrap: "wrap",
                 }}
               >
+                <label htmlFor="scout-search" className="sr-only">
+                  Filter scouts by name
+                </label>
                 <input
+                  id="scout-search"
                   className="dashboard-toolbar__search"
                   type="text"
                   placeholder="Filter by name..."
@@ -481,8 +490,8 @@ function App() {
                     border: "1px solid var(--input-border)",
                     color: "var(--text-main)",
                     borderRadius: "0.5rem",
-                    padding: "0.5rem 0.75rem",
-                    fontSize: "0.9rem",
+                    padding: "0.6rem 0.75rem",
+                    fontSize: "0.95rem",
                   }}
                 />
                 <div
@@ -494,7 +503,11 @@ function App() {
                   }}
                 >
                   <ArrowUpDown size={14} />
+                  <label htmlFor="scout-sort" className="sr-only">
+                    Sort scouts list
+                  </label>
                   <select
+                    id="scout-sort"
                     value={sortBy}
                     onChange={(e) => setSortBy(e.target.value)}
                     style={{
@@ -502,8 +515,8 @@ function App() {
                       border: "1px solid var(--input-border)",
                       color: "var(--text-main)",
                       borderRadius: "0.5rem",
-                      padding: "0.5rem 0.75rem",
-                      fontSize: "0.9rem",
+                      padding: "0.6rem 0.75rem",
+                      fontSize: "0.95rem",
                       cursor: "pointer",
                     }}
                   >
@@ -559,11 +572,14 @@ function App() {
                     )}
                   </>
                 )}
+                <ThemeToggle />
                 <button
                   style={{
                     background: "transparent",
+                    color: "var(--text-main)",
                     border: "1px solid var(--card-border)",
-                    padding: "0.575rem",
+                    width: "44px",
+                    height: "44px",
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "center",
@@ -571,16 +587,22 @@ function App() {
                     cursor: "pointer",
                   }}
                   onClick={() => setShowSettings(!showSettings)}
-                  title="Settings"
+                  aria-label="Settings"
                 >
-                  <Settings size={20} />
+                  <Cog 
+                    size={20} 
+                    strokeWidth={2.5} 
+                    color="currentColor"
+                    style={{ minWidth: '20px', minHeight: '20px' }}
+                  />
                 </button>
                 <button
                   style={{
                     background: "var(--danger-soft-bg)",
                     color: "var(--red)",
                     border: "1px solid var(--red)",
-                    padding: "0.575rem",
+                    width: "44px",
+                    height: "44px",
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "center",
@@ -588,12 +610,18 @@ function App() {
                     cursor: "pointer",
                   }}
                   onClick={handleLogout}
-                  title="Logout"
+                  aria-label="Logout"
                 >
-                  <LogOut size={20} />
+                  <Power 
+                    size={20} 
+                    strokeWidth={2.5} 
+                    color="currentColor"
+                    style={{ minWidth: '20px', minHeight: '20px' }}
+                  />
                 </button>
               </div>
             </div>
+          </nav>
 
             {showComparison ? (
               <div
