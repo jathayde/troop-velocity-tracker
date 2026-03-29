@@ -273,14 +273,18 @@ export const ScoutRow: React.FC<Props> = ({
         zIndex: showMbPopover ? 50 : 1,
       }}
     >
-      {/* ── Header with email, name, age, rank ── */}
+      {/* ── Single-line header with all components ── */}
       <div
+        className="scout-card-header"
         style={{
           display: "flex",
           alignItems: "center",
-          gap: "0.8rem",
-          marginBottom: "0.5rem",
-          flexWrap: "wrap",
+          gap: "0.6rem",
+          marginBottom: "0.75rem",
+          flexWrap: "nowrap",
+          overflowX: "auto",
+          scrollbarWidth: "none",
+          WebkitOverflowScrolling: "touch",
         }}
       >
         {/* Checkbox */}
@@ -289,7 +293,8 @@ export const ScoutRow: React.FC<Props> = ({
             type="checkbox"
             checked={isSelected}
             onChange={(e) => onSelectChange?.(userId, e.target.checked)}
-            style={{ cursor: "pointer", width: 18, height: 18, flexShrink: 0 }}
+            className="scout-checkbox"
+            style={{ cursor: "pointer", width: 16, height: 16, flexShrink: 0 }}
             title="Select for comparison"
           />
         )}
@@ -298,6 +303,7 @@ export const ScoutRow: React.FC<Props> = ({
         <button
           onClick={draftEmail}
           title="Draft Progress Report Email"
+          className="scout-email-btn"
           style={{
             background: "transparent",
             border: "none",
@@ -317,31 +323,38 @@ export const ScoutRow: React.FC<Props> = ({
             e.currentTarget.style.color = "#94a3b8";
           }}
         >
-          <Mail size={16} />
+          <Mail size={14} />
         </button>
 
         {/* Scout name */}
-        <span style={{ fontSize: "1.1rem", fontWeight: 700, flexShrink: 0 }}>
+        <span
+          className="scout-name"
+          style={{ fontSize: "1rem", fontWeight: 700, flexShrink: 0 }}
+        >
           {firstName} {lastName}
         </span>
 
-        {/* Age in years and months */}
+        {/* Age and time remaining combined */}
         <span
+          className="scout-age-time"
           style={{
-            fontSize: "0.85rem",
+            fontSize: "0.8rem",
             color: "var(--text-dim)",
-            flexShrink: 0,
+            flexShrink: 1,
+            whiteSpace: "nowrap",
           }}
         >
           {getAgeString()}
+          {monthsUntil18 !== null && ` • ${monthsUntil18}mo remaining`}
         </span>
 
         {/* Current rank */}
         <span
+          className="scout-rank"
           style={{
-            fontSize: "0.85rem",
+            fontSize: "0.75rem",
             fontWeight: 600,
-            padding: "0.2rem 0.6rem",
+            padding: "0.15rem 0.5rem",
             borderRadius: "999px",
             background: "rgba(99,102,241,0.15)",
             border: "1px solid rgba(99,102,241,0.4)",
@@ -352,48 +365,44 @@ export const ScoutRow: React.FC<Props> = ({
         >
           {currentRank === "None" ? "No Rank" : currentRank}
         </span>
-      </div>
 
-      {/* ── Status reason text (always visible, no icon) ── */}
-      <div
-        style={{
-          fontSize: "0.8rem",
-          color: statusColor,
-          fontWeight: 500,
-          marginBottom: "1rem",
-        }}
-      >
-        {reason}
-      </div>
+        {/* Status indicator */}
+        <span
+          className="scout-status"
+          style={{
+            fontSize: "0.75rem",
+            fontWeight: 600,
+            padding: "0.15rem 0.5rem",
+            borderRadius: "999px",
+            background: `${statusColor}20`,
+            border: `1px solid ${statusColor}`,
+            color: statusColor,
+            whiteSpace: "nowrap",
+            flexShrink: 0,
+          }}
+        >
+          {reason}
+        </span>
 
-      {/* ── Top controls row with MB and age countdown ── */}
-      <div
-        style={{
-          display: "flex",
-          alignItems: "center",
-          gap: "1rem",
-          flexWrap: "wrap",
-        }}
-      >
         {/* Merit badges section */}
         <div
+          className="scout-merit-badges"
           style={{
             position: "relative",
-            fontSize: "0.78rem",
+            fontSize: "0.75rem",
             color: totalMissing === 0 ? "#4ade80" : "var(--text-dim)",
             display: "flex",
             alignItems: "center",
-            gap: "0.3rem",
+            gap: "0.25rem",
             whiteSpace: "nowrap",
             cursor: "pointer",
             userSelect: "none",
+            flexShrink: 0,
           }}
           onClick={() => setShowMbPopover(!showMbPopover)}
         >
-          <span style={{ fontSize: "1rem" }}>🎖</span>
-          {totalMissing === 0
-            ? "All 21 MBs earned!"
-            : `${totalMissing} MB${totalMissing !== 1 ? "s" : ""} remaining`}
+          <span style={{ fontSize: "0.9rem" }}>🎖</span>
+          {totalMissing === 0 ? "All 21!" : `${totalMissing} left`}
 
           {showMbPopover && totalMissing > 0 && (
             <div
@@ -455,28 +464,6 @@ export const ScoutRow: React.FC<Props> = ({
             </div>
           )}
         </div>
-
-        {/* Age countdown */}
-        {monthsUntil18 !== null && (
-          <div
-            style={{
-              fontSize: "0.78rem",
-              color:
-                monthsUntil18 < 6
-                  ? "var(--red)"
-                  : monthsUntil18 < 12
-                    ? "var(--yellow)"
-                    : "var(--text-dim)",
-              display: "flex",
-              alignItems: "center",
-              gap: "0.3rem",
-              whiteSpace: "nowrap",
-            }}
-          >
-            <span>⏳</span>
-            {monthsUntil18}mo until 18
-          </div>
-        )}
       </div>
 
       {/* ── Time-scaled bar graph ── */}

@@ -161,6 +161,23 @@
   }
 }
 
+/* Scout card header responsive styles */
+@media (max-width: 768px) {
+  .scout-card-header {
+    gap: 0.4rem;
+  }
+}
+
+@media (max-width: 480px) {
+  /* Hide less essential elements on mobile */
+  .scout-age-time,
+  .scout-rank,
+  .scout-status,
+  .scout-merit-badges {
+    display: none;
+  }
+}
+
 .ticks {
   position: relative;
   width: 100%;

@@ -443,7 +443,18 @@ function App() {
                 <Users size={24} color="#818cf8" />
                 <div>
                   <h2 style={{ fontSize: "1.5rem", margin: 0 }}>
-                    Troop Status{" "}
+                    {(() => {
+                      const unitId = auth.getUnitId();
+                      if (unitId) {
+                        // Extract troop number from unit ID (format: XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX)
+                        // The troop number is typically in the first segment
+                        const match = unitId.match(/^(\d{4,})/);
+                        return match
+                          ? `Troop ${match[1]} Status`
+                          : "Troop Status";
+                      }
+                      return "Troop Status";
+                    })()}{" "}
                     {loading &&
                       `(Loading ${loadingProgress.current}/${loadingProgress.total}…)`}
                   </h2>
